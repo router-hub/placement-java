@@ -1,0 +1,11 @@
+Java Special
+Read about the https://www.edureka.co/blog/java-collections/
+
+DSA
+(1) https://leetcode.com/problems/rotate-array/
+(2) https://leetcode.com/problems/subsets/
+(3) https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/
+
+System Design -
+Network Protocol -https://www.forbes.com/advisor/business/types-network-protocols/
+https://www.youtube.com/watch?v=JwTiZ9ENquI&list=PL6W8uoQQ2c63W58rpNFDwdrBnq5G3EfT7&index=2&pp=iAQB
