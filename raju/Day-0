@@ -1,0 +1,64 @@
+                                             //Question 1\\
+
+class Solution {
+    public static void reverse(int arr[],int start,int end)
+        {
+            while(start<end)
+            {
+                int temp=arr[end];
+                arr[end]=arr[start];
+                arr[start]=temp;
+                start++;
+                end--;
+            }
+        }
+    public void rotate(int[] nums, int k) {
+        int n=nums.length;
+       k=k%n;
+        reverse(nums,0,n-1);
+        reverse(nums,0,k-1);
+        reverse(nums,k,n-1);
+    }
+}
+
+
+                                           //Question 2\\
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res=new ArrayList();
+        generatesubsets(0,nums,new ArrayList(),res);
+        return res;
+    }
+ void generatesubsets(int index,int nums[],List<Integer>curr,List<List<Integer>> res)
+     {
+         res.add(new ArrayList(curr));
+         for(int i=index;i<nums.length;i++)
+         {
+             curr.add(nums[i]);
+             generatesubsets(i+1,nums,curr,res);
+             curr.remove(curr.size()-1);
+         }
+     }
+}
+
+                                          //Question 3\\
+
+class Solution {
+    public int maxScore(int[] cardPoints, int k) {
+        int suml=0;
+        int sumr=0;
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<k;i++)
+        {
+            suml+=cardPoints[i];
+        }
+        max=suml;
+        for(int j=0;j<k;j++)
+        {
+            suml-=cardPoints[k-1-j];
+            sumr+=cardPoints[cardPoints.length-1-j];
+            max=Math.max(max,(suml+sumr));
+        }
+        return max;
+    }
+}
