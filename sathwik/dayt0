@@ -1,0 +1,68 @@
+//q2
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+         List<List<Integer>> ans = new ArrayList<>();
+        int n=nums.length;
+        List<Integer> l= new ArrayList<>();
+        for(int i=0; i<(1<<n);i++){l=new ArrayList<>();
+            for(int j=0;j<n;j++){
+                if(((1<<j)&i)!=0)l.add(nums[j]);
+            }
+            ans.add(l);
+        }
+        return ans;
+    }
+}
+//q1
+class Solution {
+    public void rotate(int[] nums, int k) {
+          Stack<Integer> stack=new Stack<>();
+        k=k%nums.length;
+        for(int i=nums.length-k;i<nums.length;i++)
+        {
+            stack.push(nums[i]);
+        }
+        for(int i=0;i<nums.length-k;i++)
+        {
+            stack.push(nums[i]);
+        }
+        for(int i=nums.length-1;i>=0;i--)
+        {
+            nums[i]=stack.pop();
+        }
+    }
+}
+//q3
+class Solution {
+    public int maxScore(int[] cardPoints, int k) {
+          int start = 0;
+        int end = 0;
+        int sum = 0;
+        k = cardPoints.length - k;
+        int ans = Integer.MAX_VALUE;
+        int totalSum = 0;
+
+        for(int i = 0; i < cardPoints.length; i++) {
+            totalSum += cardPoints[i];
+        }
+
+        if(k == 0) {
+            return totalSum;
+        }
+
+        while(end < cardPoints.length) {
+
+            sum += cardPoints[end];
+            if(end - start + 1 < k) {
+                end++;
+            }
+            else if(end - start + 1 == k) {
+                ans = Math.min(ans, sum);
+                sum -= cardPoints[start];
+                start++;
+                end++;
+            }
+        }
+        return totalSum - ans;
+    }
+}
