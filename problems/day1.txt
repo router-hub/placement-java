@@ -1,4 +1,4 @@
-(1) https://www.geeksforgeeks.org/count-occurrences-of-anagrams/
+(1) https://practice.geeksforgeeks.org/problems/count-occurences-of-anagrams5839/1
 (2) https://leetcode.com/problems/frequency-of-the-most-frequent-element/
 (3) https://leetcode.com/problems/minimum-recolors-to-get-k-consecutive-black-blocks/description/
 (4) https://leetcode.com/problems/n-queens/
