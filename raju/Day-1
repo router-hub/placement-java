@@ -1,0 +1,185 @@
+//MINIMUM RECOLORS
+
+class Solution {
+    public int minimumRecolors(String blocks, int k) {
+        int n=blocks.length();
+        int min=Integer.MAX_VALUE;
+        for(int i=0;i<n-k+1;i++)
+        {
+            int cnt=0;
+            for(int j=i;j<i+k;j++)
+            {
+                  if(blocks.charAt(j)=='W')
+                  {
+                      cnt++;
+                  }
+            }
+            min=Math.min(min,cnt);
+        }
+        return min;
+    }
+}
+//COUNT OCCURENCE OF ANAGRAMS
+
+import java.util.*;
+public class Solution {
+static boolean araAnagram(String s1,String s2)
+	{
+	
+		char[] ch1 = s1.toCharArray();
+		char[] ch2 = s2.toCharArray();
+
+		Arrays.sort(ch1);
+		Arrays.sort(ch2);
+
+		if (Arrays.equals(ch1, ch2))
+			   return true;
+		else
+			   return false;
+	}
+
+	static int countAnagrams(String text, String word)
+	{
+		int N = text.length();
+		int n = word.length();
+    int res = 0;
+
+		for (int i = 0; i <= N - n; i++) {
+
+			String s = text.substring(i, i + n);
+			if (araAnagram(word, s))
+				res++;
+		}
+	
+		return res;
+	}
+
+	public static void main(String args[])
+	{
+		String text = "forxxorfxdofr";
+		String word = "for";
+		System.out.print(countAnagrams(text, word));
+	}
+}
+//NQWEENS
+
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        
+        char [][] board = new char[n][n];
+        for(int i = 0; i < board.length; i++) {
+            for(int j = 0; j < board.length; j++) {
+                board[i][j] = '.';
+            }
+        }
+        
+        List<List<String>> ans = new ArrayList<>();
+        queen(board, 0, ans);
+        return ans;
+    }
+
+    static void queen(char[][] board, int row, List<List<String>> list) {
+
+        if(row == board.length) {
+
+            list.add(construct(board));
+            return;
+        }
+
+        for (int col = 0; col < board.length; col++) {
+            if(isSafe(board, row, col)) {
+                board[row][col] = 'Q';
+                queen(board, row + 1, list);
+                board[row][col] = '.';
+            }
+        }
+    }
+
+    static List<String> construct(char[][] board) {
+
+        List<String> internal = new ArrayList<>();
+        for (int i = 0; i < board.length; i++) {
+            String row = new String(board[i]);
+            internal.add(row);
+        }
+        return internal;
+    }
+
+    static boolean isSafe(char[][] board, int row, int col) {
+
+        // checking vertical row
+        for (int i = 0; i < row; i++) {
+            if(board[i][col] == 'Q') {
+                return false;
+            }
+        }
+
+        // checking left diagonal
+
+        int maxLeft = Math.min(row, col);
+
+        for (int i = 1; i <= maxLeft; i++) {
+            if(board[row - i][col - i] == 'Q') {
+                return false;
+            }
+        }
+
+        // checking right diagonal
+
+        int maxRight = Math.min(row, board.length - 1 - col);
+
+        for (int i = 1; i <= maxRight; i++) {
+            if(board[row - i][col + i] == 'Q') {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+//SUDOKOSOLVER
+
+class Solution {
+    private boolean solveRec(char[][] board){
+        for(int i=0; i<9; i++){
+            for(int j=0; j<9; j++){
+
+                if(board[i][j] == '.'){
+                    for(char ch='1'; ch<='9'; ch++){
+                        if(isValid(board, i, j, ch)){
+                            board[i][j] = ch;
+
+                            
+                            if(solveRec(board)) return true;
+                            else board[i][j] = '.';
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isValid(char[][] board, int row, int col, char ch){
+        for(int i=0; i<9; i++){
+            if(board[i][col] == ch){ //Check Entire Column
+                return false;
+            }
+            if(board[row][i] == ch){ // Check Entire Row
+                return false;
+            }
+            if(board[3*(row/3) + (i/3)][3*(col/3) + (i%3)] == ch){ // Check 3*3 Matrix
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+    public void solveSudoku(char[][] board) {
+        solveRec(board);
+    }
+}
+
