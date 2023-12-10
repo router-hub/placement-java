@@ -1,0 +1,14 @@
+(1) https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/description/
+(2) https://leetcode.com/problems/max-consecutive-ones-iii/description/
+(3) https://leetcode.com/problems/fruit-into-baskets/description/
+(4) https://leetcode.com/problems/maximize-the-confusion-of-an-exam/description/
+(5) https://leetcode.com/problems/contains-duplicate-ii/
+(6) https://leetcode.com/problems/contains-duplicate-iii/
+(7) https://leetcode.com/problems/expression-add-operators/
+
+Start Binary Search from Aditya Verma
+
+System Design
+https://youtu.be/l1OCmsBnQ3g?si=_vIGanGFOwxCpdyq
+https://www.baeldung.com/cs/microservices-vs-monolithic-architectures
+https://hackernoon.com/microservice-architecture-patterns-part-1-decomposition-patterns
