@@ -32,16 +32,19 @@ class Solution {
     }
  void generatesubsets(int index,int nums[],List<Integer>curr,List<List<Integer>> res)
      {
-         res.add(new ArrayList(curr));
-         for(int i=index;i<nums.length;i++)
+         if(index>=nums.length)
          {
-             curr.add(nums[i]);
-             generatesubsets(i+1,nums,curr,res);
-             curr.remove(curr.size()-1);
+             res.add(new ArrayList(curr));
+             return;
          }
+
+         curr.add(nums[index]);
+         generatesubsets(index+1,nums,curr,res);
+         curr.remove(curr.size()-1);
+         generatesubsets(index+1,nums,curr,res);
+
      }
 }
-
                                     //Question 3\\
 
 class Solution {

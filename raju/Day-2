@@ -1,0 +1,148 @@
+//q1
+class Solution {
+    public int longestSubarray(int[] nums) {
+        int i=0;
+        int result=0;
+        int last_zero=-1;
+        for(int j=0;j<nums.length;j++)
+        {
+              if(nums[j]==0)
+              {
+                  i=last_zero+1;
+                  last_zero=j;
+              }
+              result=Math.max(result,j-i);
+        }
+        return result;
+    }
+}
+//q2
+class Solution {
+    public int longestOnes(int[] nums, int k) {
+        int i=0;
+        int j=0;
+        int cnt=0;
+        int ans=0;
+        for(j=0;j<nums.length;j++)
+        {
+            if(nums[j]==0)
+            {
+                cnt++;
+                while(cnt>k)
+                {
+                    if(nums[i]==0) {
+                        cnt--;
+                    }
+
+                    i++;
+                }
+            }
+
+            ans=Math.max(ans,j-i+1);
+
+        }
+        return ans;
+        
+    }
+}
+//q3(length of longest contiguos subarray with atmost 2 distinct integers)
+class Solution {
+    public int totalFruit(int[] fruits) {
+        Map<Integer,Integer> map=new HashMap<>();
+        int i=0;
+        int max=0;
+
+        for(int j=0;j<fruits.length;j++)
+        {
+            int count=map.getOrDefault(fruits[j],0);
+            map.put(fruits[j],count+1);
+
+            while(map.size()>2)
+            {
+                int cnt=map.get(fruits[i]);
+                if(cnt==1)
+                {
+                    map.remove(fruits[i]);
+                }
+                else{
+                    map.put(fruits[i],cnt-1);
+                }
+                i++;
+            }
+
+            max=Math.max(max,j-i+1);
+            
+        }
+        return max;
+    }
+}
+//q4
+class Solution {
+    public int maxConsecutiveAnswers(String answerKey, int k) {
+        int n=answerKey.length();
+        //case 1(F->T)
+        char i=0;
+        char j=0;
+        int max1=0;
+        int cntf=0;
+        for(j=0;j<n;j++)
+        {
+           if(answerKey.charAt(j)=='F')
+           {
+              cntf++;
+           }
+           while(cntf>k)
+           {
+               if(answerKey.charAt(i)=='F') cntf--;
+               i++;
+           }
+
+           max1=Math.max(max1,j-i+1);
+        }
+        //case2(T->F)
+        char i1=0;
+        char j1=0;
+        int max2=0;
+        int cntt=0;
+        for(j1=0;j1<n;j1++)
+        {
+           if(answerKey.charAt(j1)=='T')
+           {
+              cntt++;
+           }
+           while(cntt>k)
+           {
+               if(answerKey.charAt(i1)=='T') cntt--;
+               i1++;
+           }
+
+           max2=Math.max(max2,j1-i1+1);
+        }
+        return Math.max(max1,max2);
+        
+    }
+}
+//q5
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        HashSet<Integer> set=new HashSet<>();
+        int i=0;
+        int j=0;
+        for(j=0;j<nums.length;j++)
+        {
+            
+            if(!set.add(nums[j]))
+            {
+                return true;
+            }
+            if(set.size()>k)
+            {
+                set.remove(nums[i]);
+                i++;
+            }
+        }
+        return false;
+    }
+}
+
+
