@@ -1,0 +1,11 @@
+(1) https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+(2) https://leetcode.com/problems/search-in-rotated-sorted-array/
+(3) https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/
+(4) https://leetcode.com/problems/missing-element-in-sorted-array/
+(5) https://leetcode.com/problems/find-peak-element/
+Finish Aditya Verma Playlist for Binary Search
+---- System Design --- 
+https://youtu.be/qGlUKtjqaEQ?si=Q2YG1PwdM-Tp-nqv
+https://www.baeldung.com/cs/saga-pattern-microservices
+https://www.baeldung.com/cqrs-event-sourcing-java
+https://www.tenupsoft.com/blog/The-importance-of-cqrs-and-saga-in-microservices-architecture.html
