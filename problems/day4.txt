@@ -1,0 +1,12 @@
+(1) https://leetcode.com/problems/median-of-two-sorted-arrays/
+(2) https://leetcode.com/problems/h-index-ii/
+(3) https://leetcode.com/problems/find-right-interval/
+(4) https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/
+(5) https://leetcode.com/problems/random-pick-with-weight/
+(6) https://www.spoj.com/problems/AGGRCOW/
+(7) http://codeforces.com/problemset/problem/431/D [[Learn’t something new ?]]
+(8) http://www.spoj.com/problems/PIE/
+(9) http://www.spoj.com/problems/TETRA/
+(10) http://www.spoj.com/problems/KOPC12A/
+(11) https://leetcode.com/problems/reverse-linked-list/
+(12) https://leetcode.com/problems/middle-of-the-linked-list/
