@@ -6,6 +6,7 @@
 Finish Aditya Verma Playlist for Binary Search
 ---- System Design --- 
 https://youtu.be/qGlUKtjqaEQ?si=Q2YG1PwdM-Tp-nqv
+https://amplication.com/blog/monoliths-to-microservices-using-the-strangler-pattern
 https://www.baeldung.com/cs/saga-pattern-microservices
 https://www.baeldung.com/cqrs-event-sourcing-java
 https://www.tenupsoft.com/blog/The-importance-of-cqrs-and-saga-in-microservices-architecture.html
