@@ -1,0 +1,23 @@
+(1) https://leetcode.com/problems/delete-node-in-a-linked-list/
+(2) https://leetcode.com/problems/intersection-of-two-linked-lists/
+(3) https://leetcode.com/problems/palindrome-linked-list/
+(4) https://leetcode.com/problems/add-two-numbers/
+(5) https://leetcode.com/problems/insertion-sort-list/
+(6) https://leetcode.com/problems/sort-list/description/
+(7) https://leetcode.com/problems/merge-k-sorted-lists/
+(8) http://www.spoj.com/problems/NDIV/
+(9) http://www.spoj.com/problems/GAMES/
+(10)http://codeforces.com/problemset/problem/431/B
+
+Prime Check ( O(log n) also possible read about miller-rabbin )
+Factorization
+Number of factors
+Sum of factors
+Generating Primes using sieve of eratosthenes
+Bounds on number of primes till N
+Euler’s totient function
+
+Please go through above topics from youtube
+
+System Design 
+https://www.youtube.com/watch?v=rExh5cPMZcI&list=PL6W8uoQQ2c63W58rpNFDwdrBnq5G3EfT7&index=6&pp=iAQB
