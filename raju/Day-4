@@ -1,0 +1,120 @@
+//q1
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+      int m = nums1.length, n = nums2.length;
+    List<Integer> l = new ArrayList<>();
+    
+    for (int i = 0; i < m; i++) {
+        l.add(nums1[i]);
+    }
+    for (int i = 0; i < n; i++) {
+        l.add(nums2[i]);
+    }
+    
+    Collections.sort(l);
+    
+    int p = l.size() / 2;
+    
+    if (l.size() % 2 == 0) {
+        return (l.get(p - 1) + l.get(p)) / 2.0;
+    }
+    
+    return l.get(p);
+    }
+}
+
+//q2
+class Solution {
+    public int hIndex(int[] citations) {
+     int n = citations.length;
+        int s=0,e=n-1;
+        while(s<=e){
+            int mid = s+(e-s)/2;
+            if(citations[mid] < n-mid){
+                s = mid+1;
+            }else{
+                e = mid-1;
+            }
+        }
+        return n-s;
+    }
+}
+
+//q3
+class Solution {
+    public int[] findRightInterval(int[][] intervals) {
+        int[] res = new int[intervals.length];
+        Map<Integer, Integer> map = new HashMap<>();
+        int max = Integer.MIN_VALUE;
+
+        for(int i=0; i<intervals.length; i++) {
+            int[] interval = intervals[i];
+            max = Math.max(max, interval[0]);
+            map.put(interval[0], i);
+        }
+        
+        for(int i=0; i<intervals.length; i++){
+            int end = intervals[i][1];
+            if(end > max) {
+                res[i] = -1;
+                continue;
+            }
+            int j = end;
+            while(!map.containsKey(j)) {
+                j++;
+            }
+            res[i] = map.get(j);
+        }
+
+        return res;
+    }
+}
+
+//q4
+class Solution {
+    public int smallestDivisor(int[] nums, int threshold) {
+        int low = 1;
+        int high = 0;
+        for(int num : nums) high = Math.max(num,high);
+        while(low <= high) {
+            int mid = low + (high - low) / 2;
+            int total = 0;
+            for(int num : nums) {
+                total += (num + mid - 1) / mid;
+            }
+            if(total > threshold) low = mid + 1;
+            else high = mid - 1;
+        }
+        return low;
+    }
+}
+
+//q11
+class Solution {
+    public ListNode reverseList(ListNode head) {
+         ListNode prev=null;
+        ListNode curr=head;
+       ListNode next;
+        while(curr!=null){
+             next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        head=prev;
+        return head;
+    }
+}
+
+//q12
+class Solution {
+    public ListNode middleNode(ListNode head) {
+    ListNode slow=head;
+     ListNode fast=head;
+     while(fast!=null&&fast.next!=null){
+        slow=slow.next;
+        fast=fast.next.next;
+     }
+    return slow; 
+    }
+}
