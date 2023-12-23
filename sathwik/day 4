@@ -1,0 +1,236 @@
+//q6//
+import java.util.*;
+
+class ques6{
+
+	public static int largestMinimumDistance(int stalls[],int cows){
+		Arrays.sort(stalls);
+		
+		int low = 0;
+		int high = stalls[stalls.length - 1] - stalls[0];
+		int minDistance = -1;
+		
+		while(low<=high){
+			int mid = low +(high-low)/2;
+			
+			if(isPossible(stalls,cows,mid)){
+				minDistance = mid;
+				low = mid+1;
+			}else{
+				high = mid-1;
+			}
+		}
+		return minDistance;
+	}
+	
+	public static boolean isPossible(int stalls[],int cows,int val){
+		int placed = 1;
+		int lastPlaced = stalls[0];
+		
+		for(int i = 1;i<stalls.length;i++){
+			if (stalls[i] - lastPlaced >= val) {
+                placed++;
+                lastPlaced = stalls[i];
+            }
+        }
+
+        return placed >= cows;
+		}
+	
+	public static void main (String[] args) throws java.lang.Exception
+    {
+		Scanner sc = new Scanner(System.in);
+		
+        int diff = sc.nextInt();
+
+		for(int i = 0;i<diff;i++){
+            int n = sc.nextInt();
+            int stalls[] = new int[n];
+            int cows = sc.nextInt();
+            
+            for (int j = 0; j < n; j++) {
+                stalls[j] = sc.nextInt();
+            }
+            
+            int result = largestMinimumDistance(stalls, cows);
+            System.out.println(result);
+		}
+        sc.close();
+	}
+}
+//q1//class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int m =nums1.length;
+        int n =nums2.length;
+        int size = m + n;
+        int mergedArr [] = new int [size];
+        double median = 0;
+        
+    int i=0, j=0, k=0;
+
+        while (i<=m && j<=n) {
+            if (i == m) {
+                while(j<n) {
+                mergedArr[k++] = nums2[j++];    
+                }
+                break;
+            } else if (j == n) {
+                while (i<m){
+                mergedArr[k++] = nums1[i++];
+                } 
+                break;
+            }
+
+            if (nums1[i] < nums2[j]) {
+                mergedArr[k++] = nums1[i++];
+            } else {
+                mergedArr[k++] = nums2[j++];
+            }
+        }
+
+        if(size % 2 != 0){
+            int ind1 = (size + 1)/2 ;
+            median = mergedArr[ind1 - 1];
+        }else{
+            int ind2 = size/2;
+            int ind3 = (size/2) + 1;
+            double sum = mergedArr[ind2-1] + mergedArr[ind3 - 1];
+            median = (sum / 2);
+        }
+        return median;
+    }
+}
+//q2//
+//h-index-II
+
+class Solution {
+    public int hIndex(int[] citations) {
+        int low = 0;
+        int high = citations.length-1;
+        int ans = 0;
+
+        while(low<=high){
+            int mid = low + (high-low)/2;
+
+            if(citations[mid] >= citations.length - mid){
+                ans = Math.max(ans,citations.length-mid);
+                high = mid - 1;
+            }else{
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+}
+//q5//import java.util.*;
+
+class Solution {
+    private final int arr[];
+    private int sum;
+
+    public Solution(int[] w) {
+        arr = new int[w.length];
+
+        for(int i = 0;i< w.length;i++){
+            sum += w[i];
+            arr[i] = sum;
+        }
+    }
+    
+    public int pickIndex() {
+    final int target = new Random().nextInt(sum) + 1;
+
+        int low = 0;
+        int high = arr.length-1;
+
+        while(low < high){
+            final  int mid = low + (high-low)/2;
+
+            if(target <= arr[mid]){
+                high = mid;
+            }else{
+                low = mid + 1;
+            }
+        }
+        return high;
+    }
+}
+//q9//import java.util.*;
+
+public class ques9 {
+public static double surfaceArea(double x,double y,double z){
+    double s = (x+y+z)/2.0;
+    return Math.sqrt(s*(s-x)*(s-y)*(s-z));
+}
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int t = sc.nextInt();
+
+        while(t-- > 0){
+            double a = sc.nextDouble();
+            double b = sc.nextDouble();
+            double c = sc.nextDouble();
+            double d = sc.nextDouble();
+            double e = sc.nextDouble();
+            double f = sc.nextDouble();
+
+            double uu = (b * b) + (c * c) - (f * f);
+            double vv = (a*a) + (c * c) - (e*e);
+            double ww = (a*a) + (b*b) - (d*d);
+
+            double vol = 4*a*a*b*b*c*c - (a*a*uu) - (b*b*vv) - (c*c*ww) + (uu*vv*ww);
+            double volume = Math.sqrt(vol)/12;
+
+            double surface = surfaceArea(a,b,d)+surfaceArea(b,c,f)+surfaceArea(a,c,e)+surfaceArea(d,e,f);
+
+            System.out.println((3*volume)/surface);
+        }
+    }
+}
+//q4//class Solution {
+    public int smallestDivisor(int[] nums, int threshold) {
+        int low = 1;
+        int high = 0;
+        for(int num : nums) high = Math.max(num,high);
+        while(low <= high) {
+            int mid = low + (high - low) / 2;
+            int total = 0;
+            for(int num : nums) {
+                total += (num + mid - 1) / mid;
+            }
+            if(total > threshold) low = mid + 1;
+            else high = mid - 1;
+        }
+        return low;
+    }
+}
+//q11//class Solution {
+    public ListNode reverseList(ListNode head) {
+         ListNode prev=null;
+        ListNode curr=head;
+       ListNode next;
+        while(curr!=null){
+             next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        head=prev;
+        return head;
+    }
+}
+//q12//class Solution {
+    public ListNode middleNode(ListNode head) {
+    ListNode slow=head;
+     ListNode fast=head;
+     while(fast!=null&&fast.next!=null){
+        slow=slow.next;
+        fast=fast.next.next;
+     }
+    return slow; 
+    }
+}
+
+
