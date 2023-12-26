@@ -1,0 +1,11 @@
+(1) https://leetcode.com/problems/reverse-nodes-in-k-group/
+(2) https://leetcode.com/problems/lru-cache
+(3) https://leetcode.com/problems/lfu-cache
+(4) https://leetcode.com/problems/all-oone-data-structure
+(5) https://leetcode.com/problems/design-browser-history
+(6) https://leetcode.com/problems/design-a-text-editor
+(7) https://www.spoj.com/problems/GCJ101BB/
+
+System Design
+(1) https://www.youtube.com/watch?v=jqUNbqfsnuw&list=PL6W8uoQQ2c63W58rpNFDwdrBnq5G3EfT7&index=7&pp=iAQB
+https://www.toptal.com/big-data/consistent-hashing
