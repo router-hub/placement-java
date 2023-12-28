@@ -1,0 +1,224 @@
+//q1
+class Solution {
+    public void deleteNode(ListNode node) {
+       node.val=node.next.val;
+       node.next=node.next.next;
+    }
+}
+//q2
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode d1=headA;
+        ListNode d2=headB;
+        while(d1!=d2){
+            d1=d1.next;
+            d2=d2.next;
+            if(d1==d2)
+            {
+                return d1;
+            }
+            if(d1==null){
+                d1=headB;
+            }
+            if(d2==null){
+                d2=headA;
+            }
+        }
+        return d1;
+    }
+}
+//q3
+class Solution {
+    public ListNode reverse(ListNode node){
+        ListNode prev=null;
+        ListNode curr=node;
+        while(curr!=null){
+            ListNode next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+    public ListNode mid(ListNode head){
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null && fast.next!=null )
+        {
+            slow=slow.next;
+            fast=fast.next.next;
+
+        }
+        return slow;
+    }
+    public boolean isPalindrome(ListNode head) {
+        ListNode middle=mid(head);
+        ListNode head1=head;
+        ListNode head2=reverse(middle);
+        
+        while(head2!=null){
+            if(head1.val!= head2.val){
+                return false;
+            }
+            head1=head1.next;
+            head2=head2.next;
+        }
+        return true;
+    }
+}
+//q4
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode result=new ListNode(-1);
+        ListNode ptr=result;
+        int carry=0;
+        while(l1!=null || l2!=null)
+        {
+            int sum=0+carry;
+            if(l1!=null){
+                sum+=l1.val;
+                l1=l1.next;
+            }
+            if(l2!=null){
+                sum+=l2.val;
+                l2=l2.next;
+            }
+
+            
+            carry=sum/10;
+            ptr.next=new ListNode(sum%10);
+            ptr=ptr.next;
+        }
+        if(carry==1) ptr.next=new ListNode(1);
+        return result.next;
+    }
+}
+//q5
+class Solution {
+    public ListNode insertionSortList(ListNode head) {
+        ListNode start=new ListNode(-1);
+        start.next=head;
+        ListNode ptr=start;
+        ListNode curr=head;
+        while(curr!=null)
+        {
+            if(curr.next!=null && curr.next.val<curr.val){
+                //insertion
+                while(ptr.next!=null && ptr.next.val < curr.next.val) ptr=ptr.next;
+
+                ListNode temp=ptr.next;
+                 ptr.next=curr.next;
+                 curr.next=curr.next.next;
+                 ptr.next.next=temp;
+                 ptr=start;
+            }
+            else{
+                curr=curr.next;
+            }
+        }
+        return start.next;
+    }
+}
+//q6
+class Solution {
+    public ListNode mid(ListNode head){
+        ListNode slow=head,fast=head;
+        while(fast.next!=null && fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        ListNode mid=slow.next;
+        slow.next=null;
+        return mid;
+    }
+    public ListNode merge(ListNode l1,ListNode l2){
+        ListNode l3=new ListNode();
+        ListNode ptr=l3;
+        while(l1!=null && l2!=null)
+        {
+            if(l1.val<l2.val){
+                ptr.next=l1;
+                l1=l1.next;
+                ptr=ptr.next;
+            }
+            else{
+                ptr.next=l2;
+                l2=l2.next;
+                ptr=ptr.next;
+            }
+
+        }
+
+        ptr.next=(l1!=null)? l1:l2;
+        return l3.next;
+    }
+    public ListNode sortList(ListNode head) {
+        if(head==null || head.next==null) return head;
+        ListNode middle=mid(head);
+        ListNode left=sortList(head);
+        ListNode right=sortList(middle);
+        return merge(left,right);
+    }
+}
+//q7
+class Solution {
+    public ListNode partition(int start,int end,ListNode[] lists)
+    {
+        if(start>end) return null;
+        if(start==end) return lists[start];
+        int mid=start+(end-start)/2;
+        ListNode left=partition(start,mid,lists);
+        ListNode right=partition(mid+1,end,lists);
+        return merge(left,right);
+    }
+    public ListNode merge(ListNode l1,ListNode l2){
+         if(l1==null) return l2;
+         if(l2==null) return l1;
+        if(l1.val<l2.val){
+            l1.next=merge(l1.next,l2);
+            return l1;
+        }
+        else{
+            l2.next=merge(l1,l2.next);
+            return l2;
+        }
+    }
+    public ListNode mergeKLists(ListNode[] lists) {
+        return partition(0,lists.length-1,lists);
+    }
+}
+//q8
+import java.util.Scanner;
+public class sol {
+    public static int countDivisors(int num) {
+        int cnt = 0;
+        for (int i = 1; i <= num; i++) {
+            if (num % i == 0) {
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+
+    public static int countNDivisors(int a, int b, int n) {
+        int count = 0;
+        for (int i = a; i <= b; i++) {
+            int divisors = countDivisors(i);
+            if (divisors == n) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            int n = sc.nextInt();
+
+            int result = countNDivisors(a, b, n);
+            System.out.println(result);
+    }
+}
