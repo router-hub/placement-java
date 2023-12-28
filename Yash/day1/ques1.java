@@ -1,3 +1,4 @@
+import java.util.*;
 class Solution {
     
     public static boolean areAnagram(String s1, String s2){
