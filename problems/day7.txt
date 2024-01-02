@@ -1,0 +1,14 @@
+Revise previous days 
+----Starting Stack---------
+  
+Videos - https://www.youtube.com/playlist?list=PL_z_8CaSLPWdeOezg68SKkeLN4-T_jNHd
+artciles to refers - https://leetcode.com/discuss/study-guide/2347639/A-comprehensive-guide-and-template-for-monotonic-stack-based-problems
+
+(1) https://leetcode.com/problems/valid-parentheses/
+(2) https://leetcode.com/problems/simplify-path
+(3) https://leetcode.com/problems/evaluate-reverse-polish-notation
+(4) https://leetcode.com/problems/min-stack
+(5) https://leetcode.com/problems/basic-calculator-ii
+
+System Design 
+Revise everything
