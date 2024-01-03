@@ -1,0 +1,485 @@
+class Solution {
+    public ListNode findKthNode(ListNode head, int k) {
+        while (head != null && (k)-- > 1) {
+            head = head.next;
+        }
+        return head;
+    }
+
+    public ListNode reverseLinkedList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode next;
+
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
+    }
+
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode temp = head;
+        ListNode prevLast = null;
+
+        while (temp != null) {
+            ListNode kthNode = findKthNode(temp, k);
+            if (kthNode == null) {
+                if (prevLast != null) {
+                    prevLast.next = temp;
+                    break;
+                } 
+            }
+
+            ListNode nextNode = kthNode.next;
+            kthNode.next = null;
+
+            // Update the head of the reversed sublist
+            ListNode newHead = reverseLinkedList(temp);
+
+            if (temp == head) {
+                head = newHead;
+            } else {
+                prevLast.next = newHead;
+            }
+
+            prevLast = temp;
+            temp = nextNode;
+        }
+
+        return head;
+    }
+}
+class Node {
+        public int key ; 
+        public int value;
+
+        public Node(int key, int value){
+            this.key = key;
+            this.value = value;
+        }
+}
+class LRUCache {
+
+    public int capacity;
+    HashMap<Integer, Node> map = new HashMap<>();
+    LinkedHashSet<Node> cache = new LinkedHashSet<>();
+    
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+
+        
+    }
+    
+    public int get(int key) {
+        if(!map.containsKey(key)){
+            return -1;
+        }
+        Node newNode = map.get(key);
+        cache.remove(newNode);
+        cache.add(newNode);
+
+        return newNode.value;
+    }
+    
+    public void put(int key, int value) {
+        if(map.containsKey(key)){
+            map.get(key).value = value;
+            get(key);
+            return;
+        }
+
+        if(cache.size()==capacity){
+            Node lru = cache.iterator().next();
+            cache.remove(lru);
+            map.remove(lru.key);
+        }
+
+        Node node = new Node(key,value);
+        map.put(key,node);
+        cache.add(node);
+    }
+}
+class LFUCache {
+    final int capacity;
+    int curSize;
+    int minFreq;
+    Map<Integer, Node> cache;
+    Map<Integer, DoubleLinkedList> freqMap;
+
+    public LFUCache(int capacity) {
+        this.capacity = capacity;
+        this.curSize = 0;
+        this.minFreq = 0;
+
+        this.cache = new HashMap<>();
+        this.freqMap = new HashMap<>();
+    }
+
+    public int get(int key) {
+        Node curNode = cache.get(key);
+        if (curNode == null) {
+            return -1;
+        }
+        updateNode(curNode);
+        return curNode.val;
+    }
+
+    public void put(int key, int value) {
+        if (capacity == 0) {
+            return;
+        }
+
+        if (cache.containsKey(key)) {
+            Node curNode = cache.get(key);
+            curNode.val = value;
+            updateNode(curNode);
+        }
+        else {
+            curSize++;
+            if (curSize > capacity) {
+                DoubleLinkedList minFreqList = freqMap.get(minFreq);
+                cache.remove(minFreqList.tail.prev.key);
+                minFreqList.removeNode(minFreqList.tail.prev);
+                curSize--;
+            }
+
+            minFreq = 1;
+            Node newNode = new Node(key, value);
+
+            DoubleLinkedList curList = freqMap.getOrDefault(1, new DoubleLinkedList());
+            curList.addNode(newNode);
+            freqMap.put(1, curList);
+            cache.put(key, newNode);
+        }
+    }
+
+    public void updateNode(Node curNode) {
+        int curFreq = curNode.frequency;
+        DoubleLinkedList curList = freqMap.get(curFreq);
+        curList.removeNode(curNode);
+
+        if (curFreq == minFreq && curList.listSize == 0) {
+            minFreq++;
+        }
+
+        curNode.frequency++;
+
+        DoubleLinkedList newList = freqMap.getOrDefault(curNode.frequency, new DoubleLinkedList());
+        newList.addNode(curNode);
+        freqMap.put(curNode.frequency, newList);
+    }
+
+    class Node {
+        int key;
+        int val;
+        int frequency;
+        Node prev;
+        Node next;
+
+        public Node(int key, int val) {
+            this.key = key;
+            this.val = val;
+            this.frequency = 1;
+        }
+    }
+
+    class DoubleLinkedList {
+        int listSize;
+        Node head;
+        Node tail;
+        public DoubleLinkedList() {
+            this.listSize = 0;
+            this.head = new Node(0, 0);
+            this.tail = new Node(0, 0);
+            head.next = tail;
+            tail.prev = head;
+        }
+
+        public void addNode(Node curNode) {
+            Node nextNode = head.next;
+            curNode.next = nextNode;
+            curNode.prev = head;
+            head.next = curNode;
+            nextNode.prev = curNode;
+            listSize++;
+        }
+
+        public void removeNode(Node curNode) {
+            Node prevNode = curNode.prev;
+            Node nextNode = curNode.next;
+            prevNode.next = nextNode;
+            nextNode.prev = prevNode;
+            listSize--;
+        }
+
+    }
+}
+class AllOne {
+    Node head = null;
+    Node tail = null;
+
+    Map<String,Node> map = new HashMap<>();
+
+    public AllOne() {
+        
+    }
+    
+    public void inc(String key) {
+        if(map.containsKey(key)){
+            Node node = map.get(key);
+            node.value++;
+            moveUp(node);
+        }else{
+            Node node = new Node(key,1);
+            add(node);
+            map.put(key,node);
+        }
+    }
+    
+    public void dec(String key) {
+        Node node = map.get(key);
+        if(node.value == 1){
+            map.remove(key);
+            remove(node);
+        }else{
+            node.value--;
+            moveDown(node);
+        }
+    }
+    
+    public String getMaxKey() {
+        if(!map.isEmpty()){
+            return tail.key;
+        }
+        return "";
+    }
+    
+    public String getMinKey() {
+        if(!map.isEmpty()){
+            return head.key;
+        }
+        return "";
+    }
+
+    void add(Node node){
+        if(head == null){
+            head = node;
+            tail = node;
+        }else{
+            node.next = head;
+            head.prev = node;
+            head = node;
+        }
+    }
+
+    void remove(Node node){
+        if (node == head && node == tail) {
+        head = null;
+        tail = null;
+        return;
+    }
+
+    if (node == head) {
+        head = node.next;
+        head.prev = null;
+    } else if (node == tail) {
+        tail = node.prev;
+        tail.next = null;
+    } else {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+    }
+
+    void moveUp(Node node){
+         Node pre = node.next;
+        while (pre != null && pre.value < node.value) {
+            pre = pre.next;
+        }
+        if (pre != node.next) {
+            if (node == head) {
+                head = node.next;
+            } else {
+                node.prev.next = node.next;
+            }
+            node.next.prev = node.prev;
+
+            node.next = pre;
+            if (pre == null) {
+                node.prev = tail;
+                tail.next = node;
+                tail = node;
+            } else {
+                node.prev = pre.prev;
+                pre.prev.next = node;
+                pre.prev = node;
+            }
+        }
+    }
+
+    void moveDown(Node node) {
+        Node pre = node.prev;
+        while (pre != null && pre.value > node.value) {
+            pre = pre.prev;
+        }
+        if (pre != node.prev) {
+            if (node == tail) {
+                tail = node.prev;
+            } else {
+                node.next.prev = node.prev;
+            }
+            node.prev.next = node.next;
+
+            node.prev = pre;
+            if (pre == null) {
+                node.next = head;
+                head.prev = node;
+                head = node;
+            } else {
+                node.next = pre.next;
+                pre.next.prev = node;
+                pre.next = node;
+            }
+        }
+    }
+
+    class Node{
+        Node prev;
+        Node next;
+        String key;
+        int value;
+
+        Node(String k,int v){
+            key = k;
+            value = v;
+        }
+    }
+}
+class BrowserHistory {
+    Stack<String> past;
+    Stack<String> next;
+    String current;
+
+    public BrowserHistory(String homepage) {
+        past = new Stack<>();
+        next = new Stack<>();
+        current = homepage;
+    }
+    
+    public void visit(String url) {
+        past.push(current);
+        current = url;
+        next.clear();
+    }
+    
+    public String back(int steps) {
+        while(steps-->0 && !past.isEmpty()){
+            next.push(current);
+            current = past.peek();
+            past.pop();
+        }
+        return current;
+    }
+    
+    public String forward(int steps) {
+        while(steps-->0 && !next.isEmpty()){
+            past.push(current);
+            current = next.peek();
+            next.pop();
+        }
+        return current;
+    }
+}
+class TextEditor {
+    StringBuilder result;
+    int position = 0;
+
+    public TextEditor() {
+        result = new StringBuilder();
+    }
+    
+    public void addText(String text) {
+        result.insert(position,text);
+        position += text.length();
+    }
+    
+    public int deleteText(int k) {
+        int temp = position;
+        result.delete(Math.max(0,position-k),position);
+        position = Math.max(0,position-k);
+
+        return temp - position;
+    }
+    
+    public String cursorLeft(int k) {
+        position = Math.max(0, position - k);
+        String str = result.substring(Math.max(0,position-10),position);
+        
+        return str;
+    }
+    
+    public String cursorRight(int k) {
+        position = Math.min(result.length(), position+k);
+        String str = result.substring(Math.max(0,position-10),position);
+        
+        return str;
+    }
+}
+import java.util.Scanner;
+
+public class ques7 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int testCases = sc.nextInt();
+
+        for (int c = 1; c <= testCases; c++) {
+            int n = sc.nextInt();
+            int k = sc.nextInt();
+            int b = sc.nextInt();
+            int t = sc.nextInt();
+
+            int[] positions = new int[n];
+
+            for (int i = 0; i < n; i++) {
+                positions[i] = sc.nextInt();
+            }
+
+            int[] speeds = new int[n];
+            for (int i = 0; i < n; i++) {
+                speeds[i] = sc.nextInt();
+            }
+
+            int chicksReached = 0;
+            int swaps = 0;
+
+            int reachCount = 0;
+
+            for (int i = n - 1; i >= 0; i--) {
+                int distance = b - positions[i];
+                int timeRequired = distance / speeds[i];
+
+                if (timeRequired <= t) {
+                    reachCount++;
+                } else {
+                    swaps += reachCount;
+                }
+
+                if (reachCount >= k) {
+                    break;
+                }
+            }
+
+            chicksReached = reachCount;
+
+            if (chicksReached >= k) {
+                System.out.println("Case #" + c + ": " + swaps);
+            } else {
+                System.out.println("Case #" + c + ": IMPOSSIBLE");
+            }
+        }
+    }
