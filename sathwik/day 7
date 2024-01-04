@@ -1,0 +1,203 @@
+//Q1
+class Solution {
+    public boolean isValid(String s) {int n=s.length();
+    if(n==1)return false;
+        Stack<Character> st = new Stack<>();
+        for(int i=0;i<n;i++){
+            if(s.charAt(i)=='('||s.charAt(i)=='{'||s.charAt(i)=='['){
+                st.push(s.charAt(i));
+            }
+            else if(s.charAt(i)==')'&&st.isEmpty()||s.charAt(i)==']'&&st.isEmpty()||s.charAt(i)=='}'&&st.isEmpty())return false;
+           else if(s.charAt(i)==')'&&st.pop()!='('){
+              return false;
+            }
+             else if(s.charAt(i)==']'&&st.pop()!='['){
+              return false;
+            }
+             else if(s.charAt(i)=='}'&&st.pop()!='{'){
+              return false;
+            }
+        }
+        if(st.isEmpty())return true;
+        return false; 
+    }
+}
+//Q2
+class Solution {
+    public String simplifyPath(String path) {
+        Stack<String> st = new Stack<>();
+        int p1 = 0;
+        int p2 = 0;
+        while(p2 <= path.length()){
+            if(p2 < path.length() && path.charAt(p2) == '/' || p2 == path.length()){
+                String word = path.substring(p1, p2);
+                if(word.equals(".") || word.equals("")){
+                    p2++;
+                    p1 = p2;
+                    continue;
+                }
+                else if(word.equals("..")){
+                    if(!st.isEmpty()){
+                        st.pop();
+                    }
+                }
+                else{
+                    st.add(word+"/");
+                }
+                p2++;
+                p1= p2;
+            }
+            else{
+                p2++;
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while(!st.isEmpty()){
+            sb.insert(0, st.pop());
+        }
+        String ans = sb.toString();
+        if(!ans.isEmpty() && ans.charAt(0) != '/'){
+            ans = '/'+ans;
+        }
+        if(ans.isEmpty()){
+            return "/";
+        }
+        if(ans.charAt(ans.length() - 1) == '/'){
+            ans = ans.substring(0, ans.length() - 1);
+        }
+        return ans;
+    }
+}
+//Q3
+class Solution {
+    public int evalRPN(String[] tokens) {
+        List<String> oper = Arrays.asList(new String[]{"+","-","*","/"});
+        Stack<String> num = new Stack<>();
+        for(int i = 0; i<=tokens.length-1; i++){
+            if(oper.contains(tokens[i])){
+                String num1 = num.pop();
+                String num2 = num.pop();
+               num.push(eval(num1,num2,tokens[i])+"");
+            }else{
+                num.push(tokens[i]);
+            }
+        }
+        return Integer.parseInt(num.pop());
+    }
+    public int eval(String a, String b, String oper){
+        if(oper.equals("+"))return Integer.parseInt(a)+Integer.parseInt(b);
+        else if(oper.equals("-"))return Integer.parseInt(b)-Integer.parseInt(a);
+        else if(oper.equals("*"))return Integer.parseInt(a)*Integer.parseInt(b);
+        else return Integer.parseInt(b)/Integer.parseInt(a);
+    }
+}
+//q4
+import java.util.Stack;
+
+class MinStack {
+    private Stack<Integer> stack;
+    private Stack<Integer> minStack;
+
+    public MinStack() {
+        stack = new Stack<>();
+        minStack = new Stack<>();
+    }
+
+    public void push(int val) {
+        stack.push(val);
+        if (minStack.isEmpty() || val <= minStack.peek()) {
+            minStack.push(val);
+        }
+    }
+
+    public void pop() {
+        if (!stack.isEmpty()) {
+            if (stack.peek().equals(minStack.peek())) {
+                minStack.pop();
+            }
+            stack.pop();
+        }
+    }
+
+    public int top() {
+        if (!stack.isEmpty()) {
+            return stack.peek();
+        }
+        return -1; 
+    }
+
+    public int getMin() {
+        if (!minStack.isEmpty()) {
+            return minStack.peek();
+        }
+        return -1;
+    }
+}
+//Q5
+//O(n),O(1)
+class Solution {
+    public int calculate(String s) {
+        if (s == null || s.isEmpty()) return 0;
+        int length = s.length();
+        int currentNumber = 0, lastNumber = 0, result = 0;
+        char operation = '+';
+        for (int i = 0; i < length; i++) {
+            char currentChar = s.charAt(i);
+            if (Character.isDigit(currentChar)) {
+                currentNumber = (currentNumber * 10) + (currentChar - '0');
+            }
+            if (!Character.isDigit(currentChar) && !Character.isWhitespace(currentChar) || i == length - 1) {
+                if (operation == '+' || operation == '-') {
+                    result += lastNumber;
+                    lastNumber = (operation == '+') ? currentNumber : -currentNumber;
+                } else if (operation == '*') {
+                    lastNumber = lastNumber * currentNumber;
+                } else if (operation == '/') {
+                    lastNumber = lastNumber / currentNumber;
+                }
+                operation = currentChar;
+                currentNumber = 0;
+            }
+        }
+        result += lastNumber;
+        return result;
+    }
+}
+//O(n),o(n)
+class Solution {
+    public int calculate(String s) {
+
+        if (s == null || s.isEmpty()) return 0;
+        int len = s.length();
+        Stack<Integer> stack = new Stack<Integer>();
+        int currentNumber = 0;
+        char operation = '+';
+        for (int i = 0; i < len; i++) {
+            char currentChar = s.charAt(i);
+            if (Character.isDigit(currentChar)) {
+                currentNumber = (currentNumber * 10) + (currentChar - '0');
+            }
+            if (!Character.isDigit(currentChar) && !Character.isWhitespace(currentChar) || i == len - 1) {
+                if (operation == '-') {
+                    stack.push(-currentNumber);
+                }
+                else if (operation == '+') {
+                    stack.push(currentNumber);
+                }
+                else if (operation == '*') {
+                    stack.push(stack.pop() * currentNumber);
+                }
+                else if (operation == '/') {
+                    stack.push(stack.pop() / currentNumber);
+                }
+                operation = currentChar;
+                currentNumber = 0;
+            }
+        }
+        int result = 0;
+        while (!stack.isEmpty()) {
+            result += stack.pop();
+        }
+        return result;
+    }
+}
