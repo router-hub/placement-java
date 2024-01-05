@@ -1,0 +1,10 @@
+(1) https://leetcode.com/problems/largest-rectangle-in-histogram/
+(2) https://leetcode.com/problems/basic-calculator
+(3) https://leetcode.com/problems/remove-duplicate-letters
+(4) https://leetcode.com/problems/create-maximum-number
+(5) https://leetcode.com/problems/beautiful-towers-ii
+(6) https://leetcode.com/problems/beautiful-towers-i
+(7) https://leetcode.com/problems/apply-operations-to-maximize-score
+
+System Design
+https://www.youtube.com/watch?v=C7_--hAhiaM&list=PL6W8uoQQ2c63W58rpNFDwdrBnq5G3EfT7&index=8&pp=iAQB
