@@ -80,7 +80,7 @@ class AllOne {
     }
 
     void moveUp(Node node){
-         Node pre = node.next;
+        Node pre = node.next;
         while (pre != null && pre.value < node.value) {
             pre = pre.next;
         }
