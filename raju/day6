@@ -1,0 +1,164 @@
+//q1
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> st=new Stack<>();
+        for(char ch: s.toCharArray()){
+            if(ch=='(')
+            st.push(')');
+
+            else if(ch=='{')
+            st.push('}');
+            
+            else if(ch=='[')
+            st.push(']');
+            
+            else{
+                if(st.isEmpty() || st.pop()!=ch){
+                    return false;
+                }
+            }
+            
+        }
+        return st.isEmpty();
+    }
+}
+//q2
+class Solution {
+    public String simplifyPath(String path) {
+        String result="";
+        Stack<String> s=new Stack<>();
+
+        for(int i=0;i<path.length();i++){
+            if(path.charAt(i)=='/') continue;
+            StringBuilder temp=new StringBuilder("");
+            while(i<path.length()&& path.charAt(i)!='/'){
+                temp.append(path.charAt(i));
+                i++;
+            }
+            String  tem=temp.toString();
+            if(tem.equals(".")) continue;
+
+            else if(tem.equals("..")){
+                if(!s.isEmpty()){
+                    s.pop();
+                }
+            }
+            else{
+                s.push(tem);
+            }
+        }
+        while(!s.isEmpty()){
+            result="/"+s.pop()+result;
+            
+            
+        }
+        if(result.length()==0){
+            return "/";
+        }
+        return result;
+    }
+}
+//q3
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack<String> stack = new Stack<>();
+        String x = "-1";
+        for(int i=0; i < tokens.length; i++){
+            if(tokens[i].equals("+"))
+                x = Integer.toString(Integer.parseInt(stack.pop()) + Integer.parseInt(stack.pop()));
+            else if(tokens[i].equals("-")){
+                String y = stack.pop();
+                x = Integer.toString(Integer.parseInt(stack.pop()) - Integer.parseInt(y)); 
+            }
+            else if(tokens[i].equals("*"))
+                x = Integer.toString(Integer.parseInt(stack.pop()) * Integer.parseInt(stack.pop()));
+            else if(tokens[i].equals("/")){
+                String y = stack.pop();
+                x = Integer.toString(Integer.parseInt(stack.pop()) / Integer.parseInt(y)); 
+            }   
+            else
+                x = tokens[i];
+
+            stack.push(x);
+        }
+        return Integer.parseInt(x);
+    }
+}
+//q4
+import java.util.*;
+class MinStack {
+    private Stack<Integer> stack;
+    private Stack<Integer> minStack;
+
+    public MinStack() {
+        stack = new Stack<>();
+        minStack = new Stack<>();
+    }
+
+    public void push(int val) {
+        stack.push(val);
+        if (minStack.isEmpty() || val <= minStack.peek()) {
+            minStack.push(val);
+        }
+    }
+
+    public void pop() {
+        if (!stack.isEmpty()) {
+            if (stack.peek().equals(minStack.peek())) {
+                minStack.pop();
+            }
+            stack.pop();
+        }
+    }
+
+    public int top() {
+        if (!stack.isEmpty()) {
+            return stack.peek();
+        }
+        return -1; 
+    }
+
+    public int getMin() {
+        if (!minStack.isEmpty()) {
+            return minStack.peek();
+        }
+        return -1;
+    }
+}
+//q5
+// TC: O(n), SC: O(1)
+class Solution {
+    public int calculate(String s) {
+        int num = 0;
+        char operator = '+';
+        int last = 0, sum = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            if (Character.isDigit(c)) {
+                num = num * 10 + (c - '0');
+            }
+
+            if (isOperator(c) || i == s.length() - 1) {
+                if (operator == '+') {
+                    sum += last;
+                    last = num;
+                }
+                else if (operator == '-') {
+                    sum += last;
+                    last = -num;
+                }
+                else if (operator == '*') last *= num;
+                else if (operator == '/') last /= num;
+
+                num = 0;
+                operator = c;
+            }
+        }
+        return sum += last;
+    }
+    private boolean isOperator(char c) {
+        return c == '+' || c == '-' || c == '*' || c == '/';
+    }
+}
