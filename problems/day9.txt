@@ -1,0 +1,6 @@
+(1) https://leetcode.com/problems/repeated-dna-sequences
+(2) https://leetcode.com/problems/substring-with-concatenation-of-all-words
+(3) https://leetcode.com/problems/n-queens-ii
+
+And remaining question of stack
+https://youtu.be/WZjSFNPS9Lo?si=jThjrv8FpnCi6ndt
