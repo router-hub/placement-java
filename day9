@@ -1,0 +1,140 @@
+//q4
+//brutforce
+class Skiplist {
+List<Integer> list;
+    public Skiplist() {
+        list=new ArrayList<>();
+    }
+    
+    public boolean search(int target) {
+       if (list.size() == 0) return false;
+        int idx = Collections.binarySearch(list, target);
+        return idx >= 0;
+    }
+    
+    public void add(int num) {
+        if (list.size() == 0) {
+            list.add(num);
+        } else {
+            int idx = Collections.binarySearch(list, num);
+            if (idx < 0) idx = -idx - 1;
+            list.add(idx, num);
+        }
+    }
+    
+    public boolean erase(int num) {
+         int idx = Collections.binarySearch(list, num);
+        if (idx < 0) return false;
+        list.remove(idx);
+        return true;
+    }
+}
+//optimal
+class Skiplist {
+    int[] array;
+    public Skiplist() {
+        array=new int[20000];
+    }
+    
+    public boolean search(int target) {
+        return array[target]>0;
+    }
+    
+    public void add(int num) {
+        array[num]++;
+    }
+    
+    public boolean erase(int num) {
+        if(array[num]>0){
+            array[num]--;
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+//q1
+class Solution {
+    public List<String> findRepeatedDnaSequences(String s) {
+        HashMap<String, Integer> map = new HashMap<>();
+        
+        for(int i = 0; i <= s.length() - 10; i++) {
+            String str1 = s.substring(i, i + 10);
+            if(s.substring(i).contains(str1)) {
+                map.put(str1, map.getOrDefault(str1,0)+1);
+            }
+        }
+        
+        List<String> ans = new ArrayList<>();
+        for(Map.Entry<String,Integer> entry : map.entrySet()) {
+            if(entry.getValue() > 1) {
+                ans.add(entry.getKey());
+            }
+        }
+        return ans;
+    }
+}
+//q2
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+         final Map<String, Integer> counts = new HashMap<>();
+        for (final String word : words) {
+            counts.put(word, counts.getOrDefault(word, 0) + 1);
+        }
+        final List<Integer> indexes = new ArrayList<>();
+        final int n = s.length(), num = words.length, len = words[0].length();
+        for (int i = 0; i < n - num * len + 1; i++) {
+            final Map<String, Integer> seen = new HashMap<>();
+            int j = 0;
+            while (j < num) {
+                final String word = s.substring(i + j * len, i + (j + 1) * len);
+                if (counts.containsKey(word)) {
+                    seen.put(word, seen.getOrDefault(word, 0) + 1);
+                    if (seen.get(word) > counts.getOrDefault(word, 0)) {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+                j++;
+            }
+            if (j == num) {
+                indexes.add(i);
+            }
+        }
+        return indexes;
+    }
+}
+//q3
+class Solution {
+    public int totalNQueens(int num) {
+    int[] memo = new int[num];
+    int count = 0 ;
+    for(int i=0;i<num;i++) {
+      memo[0] = i;
+      count = count + dfs(0, i, memo,num);
+    }
+    return count;
+    }
+  
+    public static int dfs(int x, int y, int[] memo, int num){
+    int count = 0;
+    if(isValid(x,y,memo)){
+      if(x == num -1) return 1;
+      for(int i=0;i<num;i++){
+        memo[x+1] = i;
+        count = count + dfs(x+1,i, memo, num);
+      }
+    }
+    return count;
+  }
+  public static boolean isValid(int x, int y, int[] memo){
+    int curr;
+    for(int i=0; i<x;i++){
+      curr = memo[x-i-1];
+      if(curr == y || (y > 0 && curr == y-i-1) || curr == y+i+1)
+        return false;
+    }
+    return true;
+  }
+}
