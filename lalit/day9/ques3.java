@@ -22,23 +22,50 @@ class Solution {
 	}
 
 	private boolean isSafe(boolean[][] board, int row, int col) {
-		for (int i = 0; i < row; i++) {
-			if(board[i][col]) {
-				return false;
-			}
-		}
-		int maxLeft = Math.min(row, col);
-		for(int i= 1 ;i<=maxLeft;i++) {
-			if (board[row-i][col-i]) {
-				return false;
-			}
-		}
-		int maxRight = Math.min(row, board.length-col-1);
-		for (int i = 1; i <= maxRight; i++) {
-			if(board[row-i][col+i]) {
-				return false;
-			}
-		}
-		return true;
+		//horizontal
+        for(int i = 0;i<board.length;i++){
+            if(board[row][i]){
+                return false;
+            }
+        }
+
+        //vertical
+        for(int i = 0;i<board.length;i++){
+            if(board[i][col]){
+                return false;
+            }
+        }
+        
+        //upper left
+        int r = row;
+        for(int c = col;c>=0 && r>=0 ;c--,r--){
+            if(board[r][c]){
+                return false;
+            }
+        }
+
+        //upper right
+        r = row;
+        for(int c = col;c<board.length && r>=0;r--,c++){
+            if(board[r][c]){
+                return false;
+            }
+        }
+
+        //lower left
+        r = row;
+        for(int c = col;c>=0 && r<board.length;r++,c--){
+            if(board[r][c]){
+                return false;
+            }
+        }
+
+        //lower right
+        for(int c = col;c<board.length && r<board.length;c++,r++){
+            if(board[r][c]){
+                return false;
+            }
+        }
+        return true;
 	}
 }
