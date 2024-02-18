@@ -1,0 +1,138 @@
+//q1
+class Solution {
+    public List<String> findRepeatedDnaSequences(String s) {
+        HashSet<String> ans=new HashSet<>();
+        HashSet<String> set=new HashSet<>();
+        for(int i=0;i<s.length()-9;i++){
+            String seq=s.substring(i,i+10);
+            if(set.contains(seq)){
+                ans.add(seq);
+            }
+            else{
+                set.add(seq);
+            }
+
+        }
+        return new ArrayList<>(ans);
+    }
+}
+//q2
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        if(s.length()==0 || words.length==0) return new ArrayList();
+        List<Integer> ans=new ArrayList<>();
+        int n=s.length();
+        int a=words.length;
+        int b=words[0].length();
+        HashMap<String,Integer> map=new HashMap<>();
+        for(int i=0;i<a;i++){
+            map.put(words[i],map.getOrDefault(words[i],0)+1);
+        }
+        for(int i=0;i<n-(a*b-1);i++){
+            String seq=s.substring(i,i+(a*b));
+            HashMap<String,Integer> seen =new HashMap<>();
+            for(int j=0;j<seq.length();j+=b){
+                String str=seq.substring(j,j+b);
+                seen.put(str,seen.getOrDefault(str,0)+1);
+            }
+            if(seen.equals(map)){
+                ans.add(i);
+            }
+
+
+        }
+        return ans;
+    }
+}
+//q4
+class Skiplist {
+HashMap<Integer,Integer> map;
+    public Skiplist() {
+        map=new HashMap<>();
+        
+    }
+    
+    public boolean search(int target) {
+        if(map.containsKey(target)) return true;
+        return false;
+        
+    }
+    
+    public void add(int num) {
+        map.put(num,map.getOrDefault(num,0)+1);
+        
+    }
+    
+    public boolean erase(int num) {
+        if(!map.containsKey(num)) return false;
+        int freq=map.get(num);
+        if(freq==1) map.remove(num);
+        else{
+            map.put(num,freq-1);
+        }
+        return true;
+        
+    }
+}
+//q3
+class Solution {
+    public int totalNQueens(int n) {
+    boolean[][] board = new boolean[n][n];
+        List<List<String>> solutions = new ArrayList<>();
+       return solve(board, 0, solutions);
+       
+        
+    }
+     static int solve(boolean[][] board, int row, List<List<String>> solutions) {
+        if (row == board.length) {
+            solutions.add(display(board));
+            return 1;
+        }
+            int count = 0;
+        for (int col = 0; col < board.length; col++) {
+            if (isSafe(board, row, col)) {
+                board[row][col] = true;
+               count+=solve(board, row + 1, solutions);
+                board[row][col] = false;
+            }
+        }
+        return count;
+    }
+
+    private static boolean isSafe(boolean[][] board, int row, int col) {
+        for (int i = 0; i < row; i++) {
+            if (board[i][col]) {
+                return false;
+            }
+        }
+        int maxLeft = Math.min(row, col);
+        for (int i = 1; i <= maxLeft; i++) {
+            if (board[row - i][col - i]) {
+                return false;
+            }
+        }
+        int maxRight = Math.min(row, board.length - col - 1);
+        for (int i = 1; i <= maxRight; i++) {
+            if (board[row - i][col + i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static ArrayList<String> display(boolean[][] board) {
+        ArrayList<String> list = new ArrayList<>();
+        for (boolean[] arr : board) {
+            StringBuilder row = new StringBuilder();
+            for (boolean num : arr) {
+                if (num) {
+                    row.append("Q");
+                } else {
+                    row.append(".");
+                }
+            }
+            list.add(row.toString());
+        }
+        return list;
+    }
+}
