@@ -1,4 +1,4 @@
-import java.util.*;
+
 class Solution {
     int count=0;
     public int totalNQueens(int n) {
